@@ -4,7 +4,7 @@ angularApp
         $routeProvider
             .when("/login", {
                 //the url to the template for this view
-                templateUrl: "views/login.html",
+                templateUrl: "/assets/views/login.html",
                 //the controller of this view
                 controller: "LoginController",
                 //methods to retrieve content and do other things on load
@@ -21,7 +21,7 @@ angularApp
             //when the user navigates to the root, index of our app
             .when("/profile", {
                 //the url to the template for this view
-                templateUrl: "",
+                templateUrl: " ",
                 //the controller of this view
                 controller: "ProfileController",
                 //methods to retrieve content and do other things on load
@@ -37,7 +37,7 @@ angularApp
                         } else if (currentUser.type == 'teacher') {
                             redirectTo: '/profile/teacher'
                         } else if (currentUser.type == 'admin') {
-                            redirectTo: '/profile/teacher'
+                            redirectTo: '/profile/admin'
                         } else {
                             redirectTo: '/logout'
                         }
@@ -65,7 +65,7 @@ angularApp
                 //the url to the template for this view
                 templateUrl: "views/student-profile.html",
                 //the controller of this view
-                controller: "StudentProfileController",
+                controller: "TeacherProfileController",
                 //methods to retrieve content and do other things on load
                 resolve: {
                     currentUser: function() {

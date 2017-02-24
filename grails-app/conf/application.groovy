@@ -4,7 +4,7 @@ server {
 
 googleauth {
     clientId = '896100416043-v0cvdf52tteag7ha8939fog24sr7bm2g.apps.googleusercontent.com'
-    issuer = 'https://accounts.google.com'
+    issuer = 'accounts.google.com'
 }
 
 dataSource {

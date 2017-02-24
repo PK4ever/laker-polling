@@ -9,11 +9,13 @@ model {
 json {
     status "success"
     data {
-        accessToken token.accessToken
+        id token.accessToken.concat("_").concat(token.subject)
         user {
             first user.firstName
             last user.lastName
             email user.email
+            image user.imageUrl
+            type user.email.indexOf("_") != -1 ? "teacher" : "student"
         }
     }
 
