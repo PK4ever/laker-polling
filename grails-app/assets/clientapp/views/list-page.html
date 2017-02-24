@@ -1,0 +1,1324 @@
+<div class = "row" style="margin-bottom:50px">  
+  <div class="col-md-1"></div>
+  <div>
+    <div class="container" style="max-width:850px">
+      <div class = "row heading-bordered-bottom" style="padding-bottom:20px">  
+        <div class="col-md-12">
+          <!--=======START LOGIN BANNER====-->
+          <div class="row" ng-if="!currentUser && isNewList">  
+            <div class="col-md-6" style="width:100%">
+              <h2 class="heading-all-caps text-m" style="display:inline-block">
+                <a style="color:initial"
+                  ng-click="loginGoogler($event)" 
+                  ng-href="/login">
+                  Login to Start Your New List
+                </a>
+              </h2>
+            </div>
+            <div class="col-md-12">
+              <a class="link" title="Login to search lists and users."
+                ng-click="loginGoogler($event)" 
+                ng-href="/login">
+                <p class="clean-text">Please click here to login in order to start your new list.</p>
+              </a>
+              <div id="login-promo-container"
+              style="width:100%;background-image:url(img/bg_main.jpg);background-color:#020733;background-size: cover; background-position: 50% 0;text-align: center;margin-top: 15px;border-radius: 4px; color:white; margin-bottom:10px">
+                <div class="promo-content">
+                  <h1 clas="promo-title" style='line-height: 1.2;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;letter-spacing: 0;font-weight: 700;font-style: normal;font-size: 32px;'>
+                    Build Your Lists. Follow Other Lists.
+                  </h1>
+                  <h2 clas="promo-subtitle" style='max-width: 580px;margin: 10px auto;padding: 0 25px;font-size: 24px;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;letter-spacing: 0; font-weight: 300;font-style: normal;'>
+                    Create public and private lists of text, links, images, and nested lists. Collaborate with others. View and follow public lists.
+                  </h2>
+                  <h3 class="promo-text" style='padding: 0 50px;color: rgba(255,255,255, 1);font-size: 18px;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;letter-spacing: 0;font-weight: 400;font-style: normal;'>
+                    Login to Start Your List
+                  </h3>
+                  <div class="buttonSet">
+                    <a ng-click="loginGoogler($event)"
+                      ng-href="/login">
+                      <button class="clean-button login-button">Login With Google</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--=======END LOGIN BANNER======-->
+          
+          <!--=======START 404: LIST NOT FOUND BANNER====-->
+          <div class="row" ng-show="listNotFound">  
+            <div class="col-md-12">
+              <div id="login-promo-container" style="width:100%; text-align: center">
+                <div class="promo-content">
+                  <h1 clas="promo-title" style='font-size:44px; line-height: 1.2;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;letter-spacing: 0;font-weight: 700;font-style: normal;font-size: 32px;'>
+                    404
+                  </h1>
+                  <h2 clas="promo-subtitle" style='max-width: 580px;margin: 10px auto;padding: 0 25px;font-size: 24px;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;letter-spacing: 0; font-weight: 300;font-style: normal;'>
+                    Sorry, We Couldn't Find That List.
+                  </h2>
+                  <h3 class="clean-text" style='padding: 0 50px;font-size: 18px;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;letter-spacing: 0;font-weight: 400;font-style: normal;'>
+                    May be you should start it.
+                  </h3>
+                  <div class="buttonSet">
+                    <a ng-click="navigateToCreateNewList($event)"
+                      ng-href="/new">
+                      <button class="clean-button action-404-button">Start Your List</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--=======END 404: LIST NOT FOUND BANNER====-->
+
+          <table style="width:100%" ng-if="!listNotFound">
+            <tr>
+              <td style="width:100%; padding-left:0px">
+                <h4 ng-if="editFormIsOpen && !isNewList" class="heading-all-caps">Edit Title &amp; Description</h4>
+                <h2>
+                  <p ng-show="list && !isNewList && !editFormIsOpen" class="clean-text">
+                    <span ng-repeat="ancestorList in list.ancestors | orderBy:'createdAt'">
+                      <a class="link link--grey u-fontWeight400 u-fontSize12px" 
+                        ng-href="{{getListPath(ancestorList)}}"
+                        title="View This List."
+                        ng-mouseover="ancestorList.showDescription = true"
+                        ng-mouseleave="ancestorList.showDescription = false">
+                        {{ancestorList.title}} 
+                        <span class="u-colorLightGrey" style="margin-left: 2px; height: 10px;">&#8250;</span>
+                      </a>
+                      <span class="clean-container"
+                        ng-show="ancestorList.showDescription && !newItemFormIsOpen"
+                        style="position:absolute; top: 40px; left:10px; 
+                        background-color: white; 
+                        width:auto; height:auto;
+                        z-index: 999999;">
+                        <a class="link link--primary u-accentColor--hoverTextNormal" 
+                          ng-href="{{getListPath(ancestorList)}}"
+                          title="View This List">
+                          {{ancestorList.title}}
+                        </a><br>
+                        {{ancestorList.description}}
+                      </span>
+                    </span>
+                  </p>
+                  <span ng-show="list && !isNewList && !editFormIsOpen">
+                    {{list.title}}
+                    <span class="clean-text">
+                      <span ng-if="list.privacy == 'private'" title="This list can only be seen by contributors.">Private</span>
+                      <span ng-if="list.privacy == 'unlisted'" title="This list can only be seen by contributors.">Unlisted</span>
+                    </span>
+                  </span>
+                  <span ng-show="isNewList && currentUser">
+                    <input style="border-color: transparent !important; width:100% !important" 
+                      autocomplete="on" autofocus="autofocus" class="clean-input" 
+                      ng-model="newListData.title" 
+                      placeholder="Title ...">
+                  </span>
+                  <span ng-if="editFormIsOpen && currentUserIsOwner">
+                    <input style="border-color: transparent !important; width:100% !important" 
+                      autocomplete="on" autofocus="autofocus" class="clean-input" 
+                      ng-model="listUpdateData.title" 
+                      placeholder="Title ...">
+                  </span>
+                </h2>
+                <div class="container" style="width:100% !important; padding-left:0px !important">
+                  <p ng-show="list && !isNewList && !editFormIsOpen" class="clean-text" ng-bind="list.description"></p>
+                  
+                  <span ng-show="isNewList && currentUser">
+                    <textarea style="min-height:75px;border-color: transparent !important; margin-top:10px; width:100% !important" autocomplete="on" 
+                        autofocus="autofocus" class="clean-input" 
+                        ng-model="newListData.description" rows="4"
+                        placeholder="Description ...">
+                    </textarea>
+                    <input style="border-color: transparent !important; width:100% !important" 
+                      autocomplete="on" autofocus="autofocus" class="clean-input" 
+                      ng-model="newListData.imageUrl" 
+                      placeholder="Optional featured image url ...">
+                  </span>
+
+                  <span ng-if="editFormIsOpen && currentUserIsOwner">
+                    <textarea style="min-height:75px; border-color: transparent !important; margin-top:10px; width:100% !important" 
+                        autocomplete="on" 
+                        class="clean-input" 
+                        ng-model="listUpdateData.description" rows="4"
+                        placeholder="Description ...">
+                    </textarea>
+                    <input style="border-color: transparent !important; width:100% !important" 
+                      autocomplete="on" autofocus="autofocus" class="clean-input" 
+                      ng-model="listUpdateData.imageUrl" 
+                      placeholder="Optional featured image url ...">
+                    <div id="edit-list-info-form-buttons" style="margin-left:10px">
+                      <button class="clean-button ct-l-green cbrc-d-green" ng-show="!newContributorFormIsOpen && list" 
+                        ng-click="updateListInfo()">
+                        Save
+                      </button>
+                      <button class="clean-button" ng-show="!newContributorFormIsOpen && list" 
+                        ng-click="closeEditListInfoForm()">
+                        Cancel
+                      </button>
+                      <p class="ct-warning">
+                        {{saveListEditError}}
+                      </p>
+                    </div>
+                  </span>
+
+                  <div ng-if="!isNewList && list">
+                    <div style="margin-top:20px">
+                      <h4 class="heading-all-caps" style="display: inline-block">Contributors</h4>
+                      <p class="pubHeaderMetaInline">
+                        <a class="link u-baseColor--link" 
+                          style="font-size: inherit !important; margin-right:5px"
+                          ng-click="navigateToUserLists(list.userId, $event)"
+                          ng-href="/lister/{{list.userId}}" 
+                          title="View {{getUserRefById(list.userId).username}}'s lists.">
+                          @{{getUserRefById(list.userId).username}}
+                        </a> 
+                        <span ng-repeat="user in list.contributors"
+                          style="margin-right:5px">
+                          <a ng-if="user.username" 
+                            class="link u-baseColor--link" 
+                            style="font-size: inherit !important"
+                            ng-click="navigateToUserLists(user.userId, $event)" 
+                            ng-href="/lister/{{user._id}}"
+                            title="View {{user.username}}'s lists.">
+                            @{{user.username}}
+                          </a> 
+                        </span>
+                      </p>
+                    </div>
+                    
+                    <div style="margin-top:0px">
+                      <h4 class="heading-all-caps" style="display: inline-block">
+                        Items
+                      </h4>
+                      <span ng-if="list.itemCounts" class="pubHeaderMetaInline">
+                        <span ng-if="list.itemCounts.total">
+                          <span ng-if="list.itemCounts.links">
+                            {{list.itemCounts.links}} Link<span ng-if="list.itemCounts.links > 1">s</span>
+                          </span>
+                          <span ng-if="list.itemCounts.images">
+                            <span class="middotDivider"></span>
+                            {{list.itemCounts.images}} Image<span ng-if="list.itemCounts.images > 1">s</span>
+                          </span>
+                          <span ng-if="list.itemCounts.texts">
+                            <span class="middotDivider"></span>
+                            {{list.itemCounts.texts}} Text<span ng-if="list.itemCounts.texts > 1">s</span>
+                          </span>
+                          <span ng-if="list.itemCounts.lists">
+                            <span class="middotDivider"></span>
+                            {{list.itemCounts.lists}} List<span ng-if="list.itemCounts.lists > 1">s</span>
+                          </span>
+                        </span>
+                        <span ng-if="!list.itemCounts.total">
+                          None
+                        </span>
+                      </span>
+                    </div>
+                    
+                    <div style="margin-top:0px">
+                      <h4 class="heading-all-caps"
+                        style="display: inline-block">Stats</h4>
+                      <p class="pubHeaderMetaInline" style="display: inline-block">
+                        {{list.numViews}} View<span ng-if="list.numViews == 0 || list.numViews > 0">s</span>
+
+                        <span ng-if="list.viewerLastView">
+                          <span class="middotDivider"></span>
+                          You Viewed {{list.viewerLastView.timeAgo.smallestValue}} {{list.viewerLastView.timeAgo.smallestUnit}} ago
+                        </span>
+
+                        <span ng-if="list.numCurrentViewers">
+                          <span class="middotDivider"></span>
+                          {{list.numCurrentViewers}} Current Viewer<span ng-if="list.numCurrentViewers == 0 || list.numCurrentViewers > 0">s</span>
+                        </span>
+                        <span ng-if="false && list.numWatchers">
+                          <span class="middotDivider"></span>
+                          {{list.numWatchers}} Watcher<span ng-if="list.numWatchers == 0 || list.numWatchers > 0">s</span>
+                        </span>
+                      </p>
+                      <p ng-show="list.pubIdTotalVisits > 0" class="pubHeaderMetaInline">
+                        Viewed {{list.pubIdTotalVisits}} times.
+                        <span ng-show="list.pubIdTotalWeekVisits > 0"> {{list.pubIdTotalWeekVisits}} this week.</span>
+                        <span ng-show="list.pubIdTotalVisitsByCurrentUser > 0"> {{list.pubIdTotalVisitsByCurrentUser}} by you.</span>
+                      </p>
+                    </div>
+
+                    <div id="container-contributor-controls" ng-if="currentUserContributesToList"
+                      style="margin-top:20px">
+                      <h4 class="heading-all-caps">
+                        <span ng-show="currentUserIsOwner">Owner</span>
+                        <span ng-show="!currentUserIsOwner">Contributor</span>
+                        Controls
+                      </h4>
+                      <div class="u-alignMiddle u-inlineBlock u-verticalAlignTop u-height65 u-xs-height56 u-paddingLeft8 u-paddingRight8">
+                        <div class="u-alignBlock">
+                          <button id="button-open-new-item-form" ng-show="!newItemFormIsOpen && list" style="margin-left: 0px !important;"
+                            class="clean-button" ng-click="openNewItemForm(); closeContributorControlsMenu()">
+                            New Item
+                          </button>
+                          <span id="open-edit-list-menu-button">
+                            <button class="clean-button" 
+                              ng-show="currentUserIsOwner && !contributorControlsMenuIsOpen"
+                              ng-click="contributorControlsMenuIsOpen = true">
+                              <span  class="button-label">Edit List Settings, Contributors &amp; Privacy</span>
+                              <span class="svgIcon svgIcon--arrowDown svgIcon--19px">
+                                <svg class="svgIcon-use" width="19" height="19" viewBox="0 0 19 19" style="vertical-align: middle;">
+                                  <path d="M3.9 6.772l5.205 5.756.427.472.427-.472 5.155-5.698-.854-.772-4.728 5.254L4.753 6z" fill-rule="evenodd"></path>
+                                </svg>
+                              </span>
+                            </button>
+                            <button id="button-close-contributor-controls-menu" class="clean-button"
+                              ng-show="contributorControlsMenuIsOpen"
+                              ng-click="contributorControlsMenuIsOpen = false">
+                              <span class="button-label">Close &nbsp;</span>
+                              <span class="svgIcon svgIcon--arrowDown svgIcon--19px">
+                                <svg class="svgIcon-use" width="19" height="19" viewBox="0 0 19 19" style="vertical-align: middle;">
+                                  <path d="M3.9 6.772l5.205 5.756.427.472.427-.472 5.155-5.698-.854-.772-4.728 5.254L4.753 6z" fill-rule="evenodd"></path>
+                                </svg>
+                              </span>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                      <table class="clean-container cards serviceable-popover" 
+                        style="margin-top:10px; margin-left: 0px !important; 
+                        margin-right: 0px !important; position: absolute; z-index: 9999"
+                        ng-show="contributorControlsMenuIsOpen" ng-click="closeContributorControlsMenu()">
+                        <tr>
+                          <td class="clickable" style="padding: 10px"
+                            ng-if="currentUserIsOwner && !editFormIsOpen"
+                            ng-show="!newContributorFormIsOpen && list" 
+                            ng-click="openEditListInfoForm()">
+                            Edit List Info
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="clickable" style="padding: 10px"
+                            ng-if="currentUserIsOwner"
+                            ng-show="!newContributorFormIsOpen && !editFormIsOpen && list" 
+                            ng-click="openAddContributorForm()">
+                            Add Contributors
+                          </td>
+                        </tr>
+                        <tr><td class="u-borderBottom"></td></tr>
+                        <tr>
+                          <td class="clickable" style="padding: 10px"
+                            ng-if="currentUserIsOwner && list.privacy != 'public'" 
+                            ng-click="updatePrivacy('public')">
+                            Make Public
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="clickable" style="padding: 10px" 
+                            ng-if="currentUserIsOwner && list.privacy != 'unlisted'"
+                            ng-click="updatePrivacy('unlisted')">
+                            Make Unlisted
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="clickable" style="padding: 10px"
+                            ng-if="currentUserIsOwner && list.privacy != 'private'" 
+                            ng-click="updatePrivacy('private')">
+                            Make Private
+                          </td>
+                        </tr>
+                        <tr><td class="u-borderBottom"></td></tr>
+                        <tr>
+                          <td class="clickable ct-warning cbrc-d-red" 
+                            style="padding: 10px"
+                            ng-if="currentUserIsOwner" 
+                            ng-click="deleteList()">
+                            Delete List
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div ng-if="FASLE && currentUser && !currentUserIsOwner"
+                      style="margin-top:20px">
+                      <br>
+                      <h4 class="heading-all-caps">Relationship</h4>
+                      <button class="clean-button" 
+                        ng-click="toggleCurrentUserWatches()">
+                        <span ng-show="!list.viewerUserIsWatcher">Watch</span>
+                        <span ng-show="list.viewerUserIsWatcher">Stop Watching</span>
+                      </button>
+                    </div>
+                    <div style="margin-top:20px"
+                      ng-show="list.privacy == 'public' || (currentUserIsOwner && list.privacy == 'unlisted')">
+                      <span class="clickable" title="Share this list on social media."
+                        ng-click="socialShareMenuIsOpen = !socialShareMenuIsOpen">
+                        <span  class="button-label">Share</span>
+                        <span class="svgIcon svgIcon--arrowDown svgIcon--19px">
+                          <svg class="svgIcon-use" width="19" height="19" viewBox="0 0 19 19" style="vertical-align: middle;">
+                            <path d="M3.9 6.772l5.205 5.756.427.472.427-.472 5.155-5.698-.854-.772-4.728 5.254L4.753 6z" fill-rule="evenodd"></path>
+                          </svg>
+                        </span>
+                      </span>
+                      </button>
+                      <table class="clean-container cards" 
+                        style="margin-top:10px; margin-left: 0px !important; 
+                        margin-right: 0px !important; position: absolute; z-index: 999"
+                        ng-show="socialShareMenuIsOpen" ng-click="socialShareMenuIsOpen = !socialShareMenuIsOpen">
+                        <tr>
+                          <td style="padding: 10px">
+                            <a class="clean-text" title="Share this list on Facebook."
+                              target="_blank"
+                              ng-href="https://www.facebook.com/sharer/sharer.php?u=mylysts.com/list/{{list.urlSlug}}">
+                              Facebook
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px">
+                            <a class="clean-text" title="Share this list on Twitter."
+                              target="_blank"
+                              ng-href="https://twitter.com/home?status={{getListShareOnTwitterText(list)}}">
+                              Twitter
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px">
+                            <a class="clean-text" title="Share this list on Facebook."
+                              target="_blank"
+                              ng-href="https://www.linkedin.com/shareArticle?mini=true&url=mylysts.com/list/{{list.urlSlug}}&title={{list.title}}&summary={{list.description}}&source=mylysts.com">
+                              LinkedIn
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px">
+                            <a class="clean-text" title="Share this list on Twitter."
+                              target="_blank"
+                              ng-href="https://plus.google.com/share?url=mylysts.com/list/{{list.urlSlug}}">
+                              Google+
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!--========START SAVE NEW LIST BUTTON==========-->
+      <div ng-show="isNewList && currentUser" id="add-new-item-container" class="row" style="margin-bottom:40px; padding-bottom:20px">  
+        <div class="col-md-12">
+          <table style="width:100%">
+            <tr>
+              <td>
+                <!--START LIST BUTTON-->
+                <button ng-show="!newItemFormIsOpen" 
+                  style="color: #fff;
+                  background: #1abc9c;
+                  border-color: #1abc9c;" 
+                  class="clean-button" 
+                  ng-click="startNewList()">
+                  Start List
+                </button>
+                
+                <!--PRIVACY CONTROL-->
+                <div style="display:inline-block">
+                  <button class="clean-button" style="border: none"
+                  ng-show="!newListPrivacyMenuIsOpen"
+                    ng-click="newListPrivacyMenuIsOpen = true">
+                    <span  class="button-label" ng-show="newListData.privacy == 'public'">Privacy: Public</span>
+                    <span  class="button-label" ng-show="!newListData.privacy || newListData.privacy == 'unlisted'">Privacy: Unlisted</span>
+                    <span  class="button-label" ng-show="newListData.privacy == 'private'">Privacy: Private</span>
+                    <span class="svgIcon svgIcon--arrowDown svgIcon--19px">
+                      <svg class="svgIcon-use" width="19" height="19" viewBox="0 0 19 19" style="vertical-align: middle;">
+                        <path d="M3.9 6.772l5.205 5.756.427.472.427-.472 5.155-5.698-.854-.772-4.728 5.254L4.753 6z" fill-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                  </button>
+                  <button id="button-close-new-list-privacy-menu" class="clean-button"
+                    style="border: none"
+                    ng-show="newListPrivacyMenuIsOpen"
+                    ng-click="newListPrivacyMenuIsOpen = false">
+                    <span class="button-label">Close &nbsp;</span>
+                    <span class="svgIcon svgIcon--arrowDown svgIcon--19px">
+                      <svg class="svgIcon-use" width="19" height="19" viewBox="0 0 19 19" style="vertical-align: middle;">
+                        <path d="M3.9 6.772l5.205 5.756.427.472.427-.472 5.155-5.698-.854-.772-4.728 5.254L4.753 6z" fill-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <table class="clean-container cards serviceable-popover" 
+                    style="margin-top:10px; margin-left: 0px !important; 
+                    margin-right: 0px !important; position: absolute; z-index: 9999"
+                    ng-show="newListPrivacyMenuIsOpen" ng-click="closeNewListPrivacyMenu()">
+                    <tr>
+                      <td class="clickable" style="padding: 10px"
+                        ng-click="updateNewListPrivacy('public')">
+                        Public
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="clickable" style="padding: 10px" 
+                        ng-click="updateNewListPrivacy('unlisted')">
+                        Unlisted
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="clickable" style="padding: 10px"
+                        ng-click="updateNewListPrivacy('private')">
+                        Private
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+            <tr ng-show="errorStartingList && startNewListErrorMessage && startNewListErrorMessage.length">
+              <p class="clean-text ct-warning" style="text-align: left" ng-bind="startNewListErrorMessage"></p>
+            </tr>
+            <tr>
+              <td style="width:100%">
+                <div class="col-md-12" style="padding-left:0px; padding-top:10px">
+                  <p class="clean-text" style="text-align: center">
+                    <i>You'll be able to add text, link, and image items after you start this list. You'll also be able to add contributors and change the privacy to unlisted or private.</i>
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!--========END SAVE NEW LIST BUTTON==========-->
+
+      <div ng-show="!isNewList" id="add-new-item-container" class="row" style="margin-top:10px; margin-bottom:40px; padding-bottom:20px">  
+        <div class="col-md-12">
+          <table style="width:100%">
+            <tr ng-show="newContributorFormIsOpen" id="add-new-contributor-form" 
+            class="u-borderBottom">
+              <td style="width:100%">
+                <div class="col-md-12" style="padding-left:0px; padding-top:10px">
+                    <div style="margin-top:15px">
+                      <ul class="clean-text" style="list-style: none;">
+                        <li style="margin-bottom:5px;">
+                          <i>Find and add a contributor to this list.</i>
+                        </li>
+                        <li>
+                          <div style="width:100% !important">
+                            <input id="input-search-users-for-contributors"
+                              style="width:100% !important; border-top: none; border-right: none; border-left: none" 
+                              class="clean-input" 
+                              ng-model="newContributorSearchKeyword" 
+                              placeholder="Search users ...">
+                              <table id="user-search-results">
+                                <tr style="margin-bottom:10px">
+                                  <td colspan="2">
+                                  <i style="padding-top:5px" 
+                                    ng-show="newContributorSearchKeyword.length && !searchingUsers && userSearchResults">
+                                    Found {{userSearchResults.length}} users.
+                                  </i>
+                                  <span ng-show="searchingUsers">
+                                    Searching users by {{usersSearchKeywords}}
+                                  </span>
+                                  </td>
+                                </tr>
+                                <tr ng-repeat="user in userSearchResults">
+                                  <td>
+                                    <a ng-if="user.username" class="link u-baseColor--link" 
+                                      ng-href="/lister/{{user.id}}" title="View {{user.username}}'s lists.">
+                                      @{{user.username}}
+                                    </a>
+                                  </td>
+                                  <td style="padding-left:10">
+                                    <button ng-if="!user.addedAsContributor && !userIsAlreadyContributor(user)"
+                                    class="clean-button" title="Add {{user.username}}'s as a contributor to this list."
+                                    ng-click="addUserAsContributor(user)">
+                                      Add as Contributor
+                                    </button>
+                                    <span class="clean-text" style="padding-left:10px" ng-if="user.addedAsContributor">Added as Contributor</span>
+                                  </td>
+                                </tr>
+                              </table>
+                          </div>
+                        </li>
+                      </ul>
+
+                      <h6 ng-show="addingNewListContributor && !failedToAddNewListContributor" class="clean-text text-s">
+                        Adding Contributor
+                      </h6>
+                      <b ng-show="AddNewListContributorSuccess && !addingNewListContributor" class="clean-text text-t ct-success">Added</b>
+                      <b ng-show="failedToAddNewListContributor && !addingNewListContributor" class="clean-text text-t ct-warning">Not Added</b>
+                    </div>
+                    <br>
+                    <button  style="margin: 10px 0 10px 0;" class="clean-button ct-warning cbrc-d-red" ng-click="newContributorFormIsOpen = !newContributorFormIsOpen">
+                      Close Form
+                    </button>
+                    <br><br>
+                </div>
+              </td>
+            </tr>
+            <tr ng-if="list.imageUrl">
+              <td style="width:100%">
+                <div class="col-md-12" style="padding-left:0px; padding-top:10px; margin-bottom:50px">
+                  <a ng-href="{{getItemImageURL(list)}}" 
+                    target="_blank"
+                    title="Open image in new tab at {{getItemImageURL(item)}}">
+                    <img  src="{{getItemImageURL(list)}}" 
+                      style="width:100%; max-height:400px"
+                      title="Featured image of this list.">
+                  </a>
+                </div>
+              </td>
+            </tr>
+          <tr>
+            <td>
+                <h4 ng-show="currentUser || !list.itemCounts.total"
+                  style="width:auto !important; display: inline-block !important; cursor: pointer !important"
+                  class="heading-all-caps u-borderBottom" 
+                  ng-class="(selectedTab == 'items') ? 'u-borderBottom--colorDarkGrey' : ''"
+                  ng-click="selectTab('items')">
+                  Items
+                </h4>
+                <h4 ng-show="currentUser || !list.itemCounts.total"
+                  style="width:auto !important; display: inline-block !important; margin-left:10px; cursor: pointer !important;"
+                  class="heading-all-caps u-borderBottom" 
+                  ng-class="(selectedTab == 'nestedLists') ? 'u-borderBottom--colorDarkGrey' : ''"
+                  ng-click="selectTab('nestedLists')">
+                  Nested Lists
+                </h4>
+              </td>
+            </tr>
+            </tr>
+            <tr ng-show="listItems && listItems.length">
+              <td style="width:100%">
+                <div class="col-md-12" style="padding-left:0px; padding-top:10px">
+                <ul id="items-list" class="cards cards--bordered "
+                  infinite-scroll="loadMoreItems()" 
+                  infinite-scroll-immediate-check="true"
+                  infinite-scroll-disable="loadingMoreItems">
+                  <li class="card card-collection"
+                    ng-repeat="item in listItems | orderBy:'-reorderedAt' track by $index"
+                    ng-if="(selectedTab == 'items' && item.type && item.type != 'list') || (selectedTab == 'nestedLists' && (!item.type || item.type == 'list'))">
+                    
+                    <div class="card-content" 
+                      ng-click="recordListItemClick(item)"
+                      style="padding-left:0px !important; padding-right:5px">
+                      <h3 class="card-name">
+                        <span ng-if="item.data && item.data.type == 'list'">
+                          <a class="link link--primary u-accentColor--hoverTextNormal"
+                            ng-href="{{getListPath(item)}}"
+                            title="View This List">
+                            {{getItemTitle(item)}}
+                          </a>
+                        </span>
+                        <span ng-if="item.type == 'link'">
+                          <a class="link link--primary u-accentColor--hoverTextNormal"
+                            style="font-size: 10px !important"
+                            ng-if="item.data.url && item.data.url.length"
+                            ng-href="{{getItemImageURL(item)}}" 
+                            target="_blank"
+                            title="Open image in new tab at {{getItemImageURL(item)}}">
+                            <img ng-if="item.data.imageUrl" src="{{getItemImageURL(item)}}" 
+                            title="Open image in new tab: {{item.data.description}}" 
+                              style="max-width:100%; max-height:300px">
+                          </a>
+                          <br>
+                          <a class="link link--primary u-accentColor--hoverTextNormal" 
+                            ng-href="{{getItemURL(item)}}" 
+                            target="_blank"
+                            title="Go to {{item.data.url}}.">
+                            <span ng-show="item.data.title" ng-bind="item.data.title"></span>
+                            <span ng-show="!item.data.title" ng-bind="item.data.url"></span>
+                          </a>
+                        </span>
+                        <span ng-if="item.type == 'image'">
+                          <img  src="{{getItemImageURL(item)}}" title="{{item.data.description}}" 
+                            style="max-width:100%; max-height:300px">
+                          <br>
+                          <a class="link link--primary u-accentColor--hoverTextNormal"
+                            style="font-size: 10px !important"
+                            ng-if="item.data.url && item.data.url.length"
+                            ng-href="{{getItemImageURL(item)}}" 
+                            target="_blank"
+                            title="Open image in new tab at {{getItemImageURL(item)}}">
+                            <span ng-show="item.data.title" ng-bind="item.data.title"></span>
+                            <span ng-show="!item.data.title"
+                              style="font-size: 11px !important; margin-top:5px">View Image</span>
+                          </a>
+                          <a class="link link--primary u-accentColor--hoverTextNormal"
+                            style="font-size: 10px !important"
+                            ng-if="item.data.url && item.data.url.length"
+                            ng-href="{{getItemURL(item)}}" 
+                            target="_blank"
+                            title="Go to {{getItemURL(item)}}">
+                            <span class="middotDivider"></span>
+                            <span ng-show="item.data.title" ng-bind="item.data.title"></span>
+                            <span ng-show="!item.data.title"
+                              style="font-size: 11px !important; margin-top:5px">Visit Page</span>
+                          </a>
+                        </span>
+                        <span ng-if="item.type == 'text'">
+                          {{getItemTitle(item)}}
+                        </span>
+                      </h3>
+                      <p class="card-description">{{item.data.description}}</p>
+                      <div class="u-clearfix u-marginTop10">
+                        <a style="display:block" class="card-description text-t3 link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                          target="_blank" title="Go to {{getItemURL(item)}}"
+                          ng-href="{{getItemURL(item)}}" 
+                          ng-show="item.data.title && item.data.url">
+                          {{item.urlSnippet}}
+                        </a>
+                        <span>
+                          <span class="pubMetaInline">
+                            <span ng-if="item.type != 'list' && item.type != 'link'" class="u-colorLightGrey u-fontWeight400 u-fontSize12px">
+                              {{(item.type.substring(0,1).toUpperCase() + item.type.substring(1, item.type.length))}} 
+                            </span>
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                            ng-href="{{getItemURL(item)}}" 
+                            target="_blank"
+                            ng-if="item.type == 'link'"
+                            title="Go to {{item.data.url}}.">
+                              Link
+                            </a>
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px"
+                              ng-if="item.data.type == 'list'" 
+                              ng-href="/list/{{getItemUrlSlug(item)}}"
+                              title="View This List">
+                              List
+                            </a>
+                          </span>
+                        </span>
+                        <span class="pubMetaInline">
+                          <span class="middotDivider"></span>
+                          <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                            title="View {{getUserRefById(item.userId).username}}'s lists." 
+                            ng-click="navigateToUserLists(item.userId, $event)"
+                            ng-href="/lister/{{item.userId}}">
+                            {{getUserRefById(item.userId).username}}
+                          </a>
+                        </span>
+                        <span ng-show="item.interactionCounts.clicks">
+                          <span class="middotDivider"></span>
+                          <span class="pubMetaInline">
+                            <span class="link u-colorLightGrey u-fontWeight400 u-fontSize12px">
+                              {{item.interactionCounts.clicks}}
+                              Click<span ng-if="item.interactionCounts.clicks > 1">s</span>
+                            </span>
+                          </span>
+                        </span>
+                        <span ng-show="item.numViews">
+                          <span class="middotDivider"></span>
+                          <span class="pubMetaInline">
+                            <span class="link u-colorLightGrey u-fontWeight400 u-fontSize12px">
+                              {{item.numViews}}
+                              View<span ng-if="item.numViews > 1">s</span>
+                            </span>
+                          </span>
+                        </span>
+                        <span ng-show="item.privacy == 'unlisted'">
+                          <span class="middotDivider"></span>
+                          <span class="pubMetaInline">
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" target="_blank" title="This list is unlisted." 
+                              ng-href="{{getListPath(item)}}"> 
+                              Unlisted
+                            </a>
+                          </span>
+                        </span>
+                        <span ng-show="item.privacy == 'private'">
+                          <span class="middotDivider"></span>
+                          <span class="pubMetaInline">
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" target="_blank" title="This list is private." 
+                              ng-href="{{getListPath(item)}}"> 
+                              Private
+                            </a>
+                          </span>
+                        </span>
+                        <span ng-if="item.userId == currentUser.getId() || currentUserIsOwner" class="pubMetaInline">
+                          <span class="middotDivider"></span>
+                          <span ng-if="item.type && item.type != 'list'">
+                            <span ng-if="currentUserIsOwner && $index > 0">
+                              <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                                title="Move this item up." 
+                                ng-click="moveListItemToTop(item)">
+                                Move To Top
+                              </a>
+                              <span class="middotDivider"></span>
+                            </span>
+
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                              title="Edit this item." 
+                              ng-click="openEditItemForm(item)">
+                              Edit
+                            </a>
+                            <span class="middotDivider"></span>
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                              title="Delete this item." 
+                              ng-click="deleteListItem(item)">
+                              Delete
+                            </a>
+                          </span>
+                          <span ng-if="item.data.type == 'list'">
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                              ng-href="{{getListPath(item)}}"
+                              title="Go edit or delete this list.">
+                              Manage
+                            </a>
+                          </span>
+                        </span>
+                        <span ng-show="item.contributors.length > 1">
+                          <span class="middotDivider"></span>
+                          <span class="pubMetaInline">
+                            <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px"
+                              ng-href="{{getListPath(item)}}"
+                              title="View This List">
+                              {{item.contributors.length}} Contributors
+                            </a>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div ng-if="item.virtuals.editFormIsOpen">
+                      <div>
+                        <span ng-show="item.type == 'text'">
+                          <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.title" 
+                            placeholder="Title ...">
+                          <textarea style="min-height:75px;padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                            autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.description" rows="4"
+                            placeholder="Optional description ..."></textarea>
+                        </span>
+                        <span ng-show="item.type == 'link'">
+                          <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.url" 
+                            placeholder="cool-website.com">
+
+                          <input style="width:100% !important; margin-top:10px;" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.imageUrl" 
+                            placeholder="Optional image url ...">
+                          <textarea style="min-height:75px; padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                            autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.description" rows="4"
+                            placeholder="Optional description ..."></textarea>
+                          <input style="margin-top:10px; width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.title" 
+                            placeholder="Optional display text ...">
+                            <br>
+                            <p class="clean-text text-s">
+                              <i>The Display text will show in place of the url for a cleaner look</i>
+                              <br>
+                            </p>
+                        </span>
+                        <span ng-show="item.type == 'image'">
+                          <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.imageUrl" 
+                            placeholder="Image url ...">
+                          <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.url" 
+                            placeholder="Optional link to the website the image is from...">
+                          <textarea style="min-height:75px;padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                            autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.description" rows="4"
+                            placeholder="Optional description ..."></textarea>
+                            <p class="clean-text text-s">
+                              <i>Right-Click on a picture on any website, select "Copy Image Address", and paste it in the image url input. It will look something like "cool-website.com/image1.png"</i>
+                            </p>
+                        </span>
+                        <span ng-show="item.type == 'list'">
+                          <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.title" 
+                            placeholder="Title">
+                          <textarea style="min-height:75px;padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                            autofocus="autofocus" class="clean-input" 
+                            ng-model="item.data.description" rows="4"
+                            placeholder="Description ..."></textarea>
+                        </span>
+                      </div>
+                      <div id="edit-list-item-form-buttons" style="margin-left:10px">
+                        <button class="clean-button ct-l-green cbrc-d-green" 
+                          ng-show="!newContributorFormIsOpen && list" 
+                          ng-click="updateListItemInfo(item)">
+                          Save
+                        </button>
+                        <button class="clean-button" 
+                          ng-show="!newContributorFormIsOpen && list" 
+                          ng-click="closeEditItemForm(item)">
+                          Cancel
+                        </button>
+                        <p class="ct-warning">
+                          {{item.saveUpdatesError}}
+                        </p>
+                      </div>
+                    </div>
+                    <div id="item-ratings-{{item.id || item._id}}" 
+                      ng-if="currentUser && item.type && item.type != 'list'" class="clean-text">
+                      <form>
+                        <!-- Change starability-basic to different class to see animations. -->
+                        <fieldset>
+                          <span style="margin-right:15px" class=" text-s">Vote</span>
+                          <input class="item-rating" data-item-id="{{item.id || item._id}}" 
+                            ng-click="rateItem(item, 5)" type="radio" id="item-{{item.id || item._id}}-rate5" name="rating" value="5" ng-checked="item.ratingsData.currentUserRated == 5"/>
+                          <label class="clean-text  text-s" style="margin-right:15px" for="item-{{item.id || item._id}}-rate5" title="Vote Up">
+                            Up {{item.ratingsData.countsMap.r5s}}
+                          </label>
+                          <input class="item-rating" data-item-id="{{item.id || item._id}}" 
+                            ng-click="rateItem(item, 3)" type="radio" id="item-{{item.id || item._id}}-rate1" name="rating" value="3" ng-checked="item.ratingsData.currentUserRated == 3"/>
+                          <label class="clean-text text-s" style="margin-right:15px" for="item-{{item.id || item._id}}-rate3" title="Neutral Vote">
+                            Neutral {{item.ratingsData.countsMap.r3s}}
+                          </label>
+                          <input class="item-rating" data-item-id="{{item.id || item._id}}" 
+                            ng-click="rateItem(item, 1)" type="radio" id="item-{{item.id || item._id}}-rate1" name="rating" value="1" ng-checked="item.ratingsData.currentUserRated == 1"/>
+                          <label class="clean-text text-s" for="item-{{item.id || item._id}}-rate1" title="Down Vote">
+                            Down {{item.ratingsData.countsMap.r1s}}
+                          </label>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </li>
+                </ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+          
+        </div>
+      </div>
+      
+      <div class = "row">
+        <div class="col-md-12">
+          <div id="forum-area" ng-show="chatIsVisible">
+            <div class="panel-heading clean-text" style="padding:0 0 10px 0px;">
+              <div class="clearfix" style="margin: 10px 0 10px 0">
+                <h6 class="panel-title clean-text" style="display:inline; padding:5px">
+                  <span ng-bind="numActiveClients"></span>.
+                </h6>
+                <div class="clearfix" style="margin: 10px 0 10px 0">
+
+                <!--<div class="btn-group btn-group-xs pull-right">
+                  <a type="button" class="link" href="/pubs/me">Change Publication</a>
+                  <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-cog"></span></button>
+                  <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
+                </div>-->
+                <div class="clearfix"></div>
+              </div>
+              <!--<div class="panel-body" style="padding:0 4px;">
+                <div class="row">
+                  <div id="publication-chat-messages-container" class="col-xs-12" style="max-width:100%;overflow-y:auto;overflow-x:hidden;">
+                    <div ng-show="publication" id="disqus_thread"></div>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                  </div>
+                </div>
+              </div>-->
+              <div class="panel-footer" style="padding-left:0px; background:inherit; border-top:none">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+
+  <!-- DELETE LIST Modal BUTTON -->
+  <button id="show-delete-list-modal" type="button" style="display:none; visibility: hidden;" 
+    data-toggle="modal" data-target="#deleteListModal"></button>
+  <!-- DELETE LIST Modal -->
+  <div id="deleteListModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content clean-container">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title heading">Delete List?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this list? This cannot be undo.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clean-button ct-warning cbrc-d-red" 
+            data-dismiss="modal" ng-click="confirmDeleteList()">Delete</button>
+          <button type="button" class="clean-button" 
+          data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE LIST ITEM Modal BUTTON -->
+  <button id="show-delete-list-item-modal" type="button" style="display:none; visibility: hidden;" 
+    data-toggle="modal" data-target="#deleteListItemModal"></button>
+  <!-- DELETE LIST ITEM Modal -->
+  <div id="deleteListItemModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content clean-container">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title heading">Delete Item?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this item from the list? This cannot be undo.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clean-button ct-warning cbrc-d-red" 
+            data-dismiss="modal" ng-click="confirmDeleteListItem()">Delete</button>
+          <button type="button" class="clean-button" 
+          data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAKE LIST PUBLIC Modal BUTTON -->
+  <button id="show-make-list-public-modal" type="button" style="display:none; visibility: hidden;" 
+    data-toggle="modal" data-target="#makeListPublicModal"></button>
+  <!-- MAKE LIST PUBLIC Modal -->
+  <div id="makeListPublicModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content clean-container">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title heading">Make This List Public?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This list and its descendant lists will become viewable by all users.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clean-button ct-warning cbrc-d-red" 
+            data-dismiss="modal" ng-click="confirmMakeListPublic()">Make Public</button>
+          <button type="button" class="clean-button" 
+          data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAKE LIST UNLISTED Modal BUTTON -->
+  <button id="show-make-list-unlisted-modal" type="button" style="display:none; visibility: hidden;" 
+    data-toggle="modal" data-target="#makeListUnlistedModal"></button>
+  <!-- MAKE LIST PUBLIC Modal -->
+  <div id="makeListUnlistedModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content clean-container">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title heading">Make This List Unlisted?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This list and its descendant lists will not show up on the home page, but it will be viewable by anyone with the link.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clean-button ct-warning cbrc-d-red" 
+            data-dismiss="modal" ng-click="confirmMakeListUnlisted()">Make Unlisted</button>
+          <button type="button" class="clean-button" 
+          data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAKE LIST PRIVATE Modal BUTTON -->
+  <button id="show-make-list-private-modal" type="button" style="display:none; visibility: hidden;" 
+    data-toggle="modal" data-target="#makeListPrivateModal"></button>
+  <!-- MAKE LIST PRIVATE Modal -->
+  <div id="makeListPrivateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content clean-container">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title heading">Make This List Private?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This list and its descendant lists will become viewable by only you and other contributors.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clean-button ct-warning cbrc-d-red" 
+            data-dismiss="modal" ng-click="confirmMakeListPrivate()">Make Private</button>
+          <button type="button" class="clean-button" 
+          data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD USER AS CONTRIBUTOR Modal BUTTON -->
+  <button id="show-add-new-contributor-modal" type="button" style="display:none; visibility: hidden;" 
+    data-toggle="modal" data-target="#addNewContributor"></button>
+  <!-- ADD USER AS CONTRIBUTOR Modal -->
+  <div id="addNewContributor" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content clean-container">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title heading">Add as Contributor?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to add {{userToAddAsContributor.username}} as a contributor to this list? It currently cannot be undo.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clean-button ct-warning cbrc-d-red" 
+            data-dismiss="modal" ng-click="confirmAddUserAsContributor()">Add {{userToAddAsContributor.username}} as Contributor</button>
+          <button type="button" class="clean-button" 
+          data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="newItemFormIsOpen" id="add-new-item-form" class="u-borderBottom" 
+    style="position: fixed;
+    background: white;
+    top: 0px;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    overflow-y: overlay;
+    padding-bottom: 100px;
+    padding-left: 10px;">
+    <td style="width:100%">
+      <div class="col-md-12" style="padding-left:0px; padding-top:10px">
+        <ul style="list-style: none;">
+          <li>
+            <h2>
+              <p class="clean-text">
+                <span ng-repeat="ancestorList in list.ancestors | orderBy:'createdAt'">
+                  <a class="link link--grey u-fontWeight400 u-fontSize12px" 
+                    ng-href="{{getListPath(ancestorList)}}"
+                    title="View This List."
+                    ng-mouseover="ancestorList.showDescription = true"
+                    ng-mouseleave="ancestorList.showDescription = false">
+                    {{ancestorList.title}} 
+                    <span class="u-colorLightGrey" style="margin-left: 2px; height: 10px;">&#8250;</span>
+                  </a>
+                  <span class="clean-container"
+                    ng-show="ancestorList.showDescription"
+                    style="position:absolute; top: 40px; left:10px; 
+                    background-color: white; 
+                    width:auto; height:auto;
+                    z-index: 999999;">
+                    <a class="link link--primary u-accentColor--hoverTextNormal" 
+                      ng-href="{{getListPath(ancestorList)}}"
+                      title="View This List">
+                      {{ancestorList.title}}
+                    </a><br>
+                    {{ancestorList.description}}
+                  </span>
+                </span>
+              </p>
+              {{list.title}} 
+              <span class="clean-text">
+                <span ng-if="list.privacy == 'private'" title="This list can only be seen by contributors.">Private</span>
+                <span ng-if="list.privacy == 'unlisted'" title="This list can only be seen by contributors.">Unlisted</span>
+              </span>
+            </h2>
+            
+          </li>
+          <li style="margin-bottom:5px;">
+            <h4 class="heading-all-caps">New Item</h4>
+          </li>
+          <li class="clean-text" >
+            <select id="new-item-type-select"
+              style="width:100% !important; margin: 0 0 10px 0;" 
+              class="clean-button" 
+              name="singleSelect" 
+              ng-model="newListItemType"
+              ng-change="updateNewItemType()"
+              ng-options="(x.substring(0,1).toUpperCase() + x.substring(1, x.length)) for x in itemTypes">
+            </select>
+
+            <div style="width:100% !important">
+              <span ng-show="newListItemType == 'text'">
+                <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.text.title" 
+                  placeholder="Title ...">
+                <textarea style="min-height:75px; padding-top:10px; margin-top:10px; width:100% !important;" autocomplete="on" 
+                  autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.text.description" rows="4"
+                  placeholder="Optional description ..."></textarea>
+              </span>
+              <span ng-show="newListItemType == 'link'">
+                <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.link.url" 
+                  placeholder="cool-website.com">
+                <input style="width:100% !important; margin-top:10px;" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.link.imageUrl" 
+                  placeholder="Optional image url ...">
+                <textarea style="min-height:75px; padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                  autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.link.description" rows="4"
+                  placeholder="Optional description ..."></textarea>
+                <input style="margin-top:10px; width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.link.title" 
+                  placeholder="Optional display text ...">
+                  <br>
+                  <p class="clean-text text-s">
+                    <i>The Display text will show in place of the url for a cleaner look</i>
+                    <br>
+                  </p>
+              </span>
+              <span ng-show="newListItemType == 'image'">
+                <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.image.imageUrl" 
+                  placeholder="Image url ...">
+                <input style="width:100% !important; margin-top:10px;" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.image.url" 
+                  placeholder="Optional link to where image is from...">
+                <textarea style="min-height:75px; padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                  autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.image.description" rows="4"
+                  placeholder="Optional description ..."></textarea>
+                  <p class="clean-text text-s">
+                    <i>Right-Click on a picture on any website, select "Copy Image Address", and paste it in the image url input. It will look something like "cool-website.com/image1.png"</i>
+                  </p>
+              </span>
+              <span ng-show="newListItemType == 'list'">
+                <input style="width:100% !important" autocomplete="on" autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.list.title" 
+                  placeholder="Title">
+                <textarea style="min-height:75px;padding-top:10px; margin-top:10px; width:100% !important" autocomplete="on" 
+                  autofocus="autofocus" class="clean-input" 
+                  ng-model="newListItemData.list.description" rows="4"
+                  placeholder="Description ..."></textarea>
+              </span>
+            </div>
+            <!--==========START EXAMPLE OUTPUT=======-->
+            <div id="new-item-preview-container"
+              ng-show="newListItemData[newListItemType].title.length
+                || newListItemData[newListItemType].description.length
+                || newListItemData[newListItemType].url.length
+                || newListItemData[newListItemType].imageUrl.length">
+              <h3 class="heading-all-caps" 
+                style="margin-bottom:5px !important; margin-top:15px">Preview</h3>
+              <div class="card" style="padding-top:10px">
+                <div class="card-content" style="padding-left:0px !important;">
+                  <h3 class="card-name">
+                    <span ng-if="newListItemType == 'list'">
+                      <a class="link link--primary u-accentColor--hoverTextNormal" 
+                        target="_blank"
+                        title="View this list. LINK DEACTIVATED IN PREVIEW">
+                        <span ng-bind="newListItemData[newListItemType].title"></span>
+                      </a>
+                    </span>
+                    <span ng-if="newListItemType == 'link'">
+                      <a class="link link--primary u-accentColor--hoverTextNormal"
+                        style="font-size: 10px !important"
+                        ng-if="newListItemData[newListItemType].imageUrl && newListItemData[newListItemType].imageUrl.length"
+                        ng-href="{{getItemImageURL(newListItemData[newListItemType])}}" 
+                        target="_blank"
+                        title="Open image in new tab at {{getItemImageURL(newListItemData[newListItemType])}}">
+                        <img ng-if="newListItemData[newListItemType].imageUrl" 
+                          src="{{getItemImageURL(newListItemData[newListItemType])}}" 
+                          title="{{newListItemData[newListItemType].description}}" 
+                          style="max-width:100%; max-height:300px">
+                      </a>
+                      <br>
+                      <a class="link link--primary u-accentColor--hoverTextNormal" 
+                        ng-href="{{newListItemData[newListItemType].url}}" 
+                        target="_blank"
+                        title="Go to {{newListItemData[newListItemType].url}}">
+                        <span ng-show="newListItemData[newListItemType].title" ng-bind="newListItemData[newListItemType].title"></span>
+                        <span ng-show="!newListItemData[newListItemType].title" ng-bind="newListItemData[newListItemType].url"></span>
+                      </a>
+                    </span>
+                    <span ng-if="newListItemType == 'image'">
+                      <img  src="{{getItemImageURL(newListItemData[newListItemType])}}" 
+                        title="{{newListItemData[newListItemType].description}}" 
+                        style="max-width:100%; max-height:300px">
+                      <br>
+                      <a class="link link--primary u-accentColor--hoverTextNormal"
+                        style="font-size: 10px !important"
+                        ng-if="newListItemData[newListItemType].imageUrl && newListItemData[newListItemType].imageUrl.length"
+                        ng-href="{{getItemImageURL(newListItemData[newListItemType])}}" 
+                        target="_blank"
+                        title="Open image in new tab at {{getItemImageURL(newListItemData[newListItemType])}}">
+                        <span style="font-size: 11px !important; margin-top:5px">View Image</span>
+                      </a>
+                      <a class="link link--primary u-accentColor--hoverTextNormal"
+                        style="font-size: 10px !important"
+                        ng-if="newListItemData[newListItemType].url && newListItemData[newListItemType].url.length"
+                        ng-href="{{getItemURL(newListItemData[newListItemType])}}" 
+                        target="_blank"
+                        title="Go to {{getItemURL(newListItemData[newListItemType])}}">
+                        <span class="middotDivider"></span>
+                        <span style="font-size: 11px !important; margin-top:5px">Visit Page</span>
+                      </a>
+                    </span>
+                    <span ng-if="newListItemType == 'text'">
+                      {{newListItemData[newListItemType].title}}
+                    </span>
+                  </h3>
+                  <p class="card-description">{{newListItemData[newListItemType].description}}</p>
+                  <div class="u-clearfix u-marginTop10">
+                    <a style="display:block" class="card-description text-t3 link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                      target="_blank" title="Go to {{newListItemData[newListItemType].url}}"
+                      ng-href="{{newListItemData[newListItemType].url}}" 
+                      ng-show="newListItemData[newListItemType].title && newListItemData[newListItemType].url" 
+                      ng-bind="newListItemData[newListItemType].url">
+                    </a>
+                    <span class="pubMetaInline">
+                      <span class="u-colorLightGrey u-fontWeight400 u-fontSize12px">
+                        {{(newListItemType.substring(0,1).toUpperCase() + newListItemType.substring(1, newListItemType.length))}} 
+                      </span>
+                    </span>
+                    <span class="pubMetaInline">
+                      <span class="middotDivider"></span>
+                      <a class="link u-colorLightGrey u-fontWeight400 u-fontSize12px" 
+                        title="View {{getUserRefById(item.userId).username}}'s lists. DEACTIVATED LINK IN PREVIEW">
+                        By {{currentUser.getUsername()}}
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--==========END EXAMPLE OUTPUT=======-->
+            <br>
+            
+            <div id="new-item-action-buttons" 
+              style="border-top: 1px solid rgba(0,0,0,.05);
+              background: white;
+              padding-top: 10px;
+              bottom: 0;
+              position: fixed;
+              left: 0;
+              width: 100%;
+              text-align: center">
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-6" style="padding-bottom:5px;">
+                <span style="border:none; height: auto !important"
+                  class="clean-button ct-l-green cbrc-d-green" 
+                  ng-click="addNewItem();">
+                  Add Item
+                </span>
+                <span style="border:none; height: auto !important"
+                  class="clean-button" 
+                  ng-click="closeNewItemForm()">
+                  Back to List
+                </span>
+                <p ng-show="addingNewListItem || addNewListItemSuccess || addNewListItemError" style="text-align: center">
+                  &nbsp;
+                  <b ng-show="addingNewListItem && !addNewListItemError" class="clean-text text-s">
+                    Adding ...
+                  </b>
+                  <b ng-show="addNewListItemSuccess && !addingNewListItem" class="clean-text text-t ct-success">Successfully Added Item!</b>
+                  <b ng-show="addNewListItemError && !addingNewListItem" class="clean-text text-t ct-warning">Failed to add new item.</b>
+                  <b><span class="clean-text text-t ct-warning" ng-bind="addNewItemDataValidationError"></span></b>
+                </p>
+              </div>
+              <div class="col-md-3">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </td>
+  </div>
+</div>
+

@@ -1,0 +1,68 @@
+<div class = "row" style="margin-bottom:50px">  
+  <div class="col-md-1"></div>
+  <div>
+    <div class="container" style="max-width:850px">
+      <div class = "row">  
+        <div class="col-md-12" style="width:100%">
+          <h2 class="heading-all-caps">Your Notifications</h2>
+        </div>
+      </div>
+
+      <table id="notes-table" class="table clean-text">
+        <tbody> 
+          <tr>
+            <td colspan="2" class="clean-text">
+                <div class="clean-text" ng-if="notifications && notifications.length > 0">
+                  You have {{notifications.length}} notifications.
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="clean-text" ng-if="!notifications || notifications.length < 1">
+              <h4 class="clean-text">No notifications at the moment ...</h4>
+            </td>
+          </tr>
+
+          <tr ng-repeat="note in notifications" 
+          ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+            <td style="padding-top:35px; padding-bottom: 35px; width:50px">   
+              <p>{{note.createDate|timeago}}</p>
+            </td>     
+            <td style="padding-top:35px; padding-bottom: 35px;">  
+              <p class="clean-text">{{ note.title }}</p>
+
+              <div class = "row" ng-show="hoverEdit">  
+                <div class="col-md-12">
+                  <div class="row">
+
+                    <!--====================START FOR NOTES WITH Request===================-->
+                    <!--====================START FOR NOTES WITH Request===================-->
+                    <div ng-if="note.request">
+                      <div class="col-md-2">
+                        <img class="clean-text link" style="width:60px; height:60px; border-radius: 100%" 
+                        src="{{note.request.publicationImageUrl}}"/>
+                      </div>  
+                      <div class="col-md-10">
+                        <a class="clean-text link" href="{{note.request.publicationUrl}}/edit">
+                          Edit {{note.request.publicationName}}
+                        </a>
+                        <br><br>
+                        <a class="clean-text link" href="{{note.request.userUrl}}">
+                          Visit @{{note.request.username}}
+                        </a>
+                      </div>
+                    </div>
+                    <!--====================END FOR NOTES WITH Request===================-->
+                    <!--====================END FOR NOTES WITH Request===================-->
+
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  <div class="col-md-1"></div>
+</div>
