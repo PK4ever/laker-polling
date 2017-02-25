@@ -170,6 +170,7 @@ gradle-app.setting
 .idea
 
 grails-app/conf/Application.groovy
+grails-app/conf/application.groovy
 .DS_Store
 
 

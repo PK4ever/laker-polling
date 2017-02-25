@@ -9,22 +9,16 @@ model {
 json {
     status "success"
     data {
-        id token.accessToken.concat("_").concat(token.subject)
+        id token.subject
+        accessToken String.format("%s-%s", token.accessToken, token.subject)
         user {
             first user.firstName
             last user.lastName
+            name String.format("%s %s", user.firstName, user.lastName)
             email user.email
-            image user.imageUrl
+            imageUrl user.imageUrl
             type user.email.indexOf("_") != -1 ? "teacher" : "student"
         }
     }
 
-//    data(
-//            accessToken: token.accessToken,
-//            user(
-//                    first: user.firstName,
-//                    last: user.lastName,
-//                    email: user.email
-//            )
-//    )
 }

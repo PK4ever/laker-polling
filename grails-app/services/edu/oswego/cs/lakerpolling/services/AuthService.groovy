@@ -55,9 +55,7 @@ class AuthService {
         String message = AuthErrors.TOKEN_INTEGRITY
 
         if (token.verifyAudience([grailsApplication.config.getProperty("googleauth.clientId")])) {
-            println("Passed")
             if (token.verifyIssuer(grailsApplication.config.getProperty("googleauth.issuer"))) {
-                println("Also Passed")
                 success = true
                 message = ""
             }
