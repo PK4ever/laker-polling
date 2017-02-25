@@ -8,10 +8,11 @@ angularApp
             const id_token = user.id_token
             UserService.authGoogleUser(googleUser.getAuthResponse().id_token)
                 .then((response) => {
+                    if(response.status == 'failure') return onFail(response)
                     NProgress.done()
+                    
                     const responseData = response.data
-                    //TODO(lincoln) change this to be just responseData.accessToken after jeff makes the change on server
-                    var user = new User(responseData.accessToken || responseData.id, responseData.user);
+                    var user = new User(responseData.accessToken, responseData.user);
                     if(user.saveAsCurrent()) {
                         alert("Logged in as " + user.getName())
                         $window.location.href = '/dashboard'
@@ -19,10 +20,12 @@ angularApp
                         //failed
                         alert("Logged in failed.")
                     }
-                }, (response) => {
-                    NProgress.done();
-                    alert("Error Logging In: " + response)
-                })
+                }, onFail)
+
+            function onFail(response) {
+                NProgress.done();
+                alert("Error Logging In: " + (response && response.messages || "unknown error."))
+            }
         }
         window.onGoogleSignIn = onGoogleSignIn
     })

@@ -39,6 +39,7 @@
     <meta property="og:site_name" content="Laker Polling">
 
     <!--============GOOGLE SIGN IN=========-->
+    %{--<script src="https://apis.google.com/js/platform.js" async defer></script>--}%
     <meta name="google-signin-scope" content="profile email">
     <!-- <meta name="google-signin-client_id" content="460384913941-o01p3pu021rrnq6ibbanenfrmg6r87at.apps.googleusercontent.com"> -->
 

@@ -10,36 +10,37 @@ var Cookies = (function() {
     }
 
     function Jar(prefix) {
-        this.set = function(key, value, exdays) {
-            setCookie(keyWithPrefix(key), value, exdays)
+        prefix = prefix + "_"
+        this.set = function(name, value, exdays) {
+            setCookie(nameWithPrefix(name), value, exdays)
         }
 
-        this.get = function(key) {
-            return getCookie(keyWithPrefix(key))
+        this.get = function(name) {
+            return getCookie(nameWithPrefix(name))
         }
 
-        this.remove = function(key) {
-            removeCookie(keyWithPrefix(key))
+        this.remove = function(name) {
+            removeCookie(nameWithPrefix(name))
         }
         
         this.removeAll = function() {
             removeAllByPrefix(prefix)
         }
 
-        function keyWithPrefix(key) {
-            return prefix + "_" + key
+        function nameWithPrefix(name) {
+            return prefix + name
         }
     }
     
-    function setCookie(key, value, exdays) {
+    function setCookie(name, value, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+d.toUTCString();
-        document.cookie = key + "=" + value + "; " + expires;
+        document.cookie = name + "=" + value + "; " + expires;
     }
 
-    function getCookie(key) {
-        return getAllCookies()[key];
+    function getCookie(name) {
+        return getAllCookies()[name];
     }
 
     function getAllCookies(c,C,i) {
@@ -56,8 +57,8 @@ var Cookies = (function() {
         return cachedCookies
     }
 
-    function removeCookie(key) {
-        document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    function removeCookie(name) {
+        setCookie(name, "", -1)
     }
 
     function removeAll() {
@@ -69,9 +70,11 @@ var Cookies = (function() {
 
     function removeAllByPrefix(prefix) {
         var cookies = document.cookie.split(";");
+        debugger
         for (var i = 0; i < cookies.length; i++) {
-            if(!stringStartsWith(cookies[i].split("=")[0], prefix)) continue
-            removeCookie(key);
+            const name = cookies[i].split("=")[0]
+            if(!stringStartsWith(name, prefix)) continue
+            removeCookie(name);
         }
     }
     

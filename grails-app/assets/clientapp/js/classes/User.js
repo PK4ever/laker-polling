@@ -6,13 +6,10 @@ var User = (function() {
     var currentUserCookieJar
     function User(accessToken, dbUser) {
         this.accessToken = accessToken
-        //TODO(lincoln) change this to be just dbUser.id after jeff makes the change on server
-        this.id = dbUser.id || accessToken.split('_')[0];
-        //TODO(lincoln) change this to be just dbUser.name after jeff makes the change on server
-        this.name = dbUser.name || dbUser.first + " " + dbUser.last
+        this.id = dbUser.id
+        this.name = dbUser.name
         this.email = dbUser.email
-        //TODO(lincoln) change this to be just dbUser.imageUrl after jeff makes the change on server
-        this.imageUrl = dbUser.imageUrl || dbUser.image
+        this.imageUrl = dbUser.imageUrl
         this.type = dbUser.type
     }
 
@@ -75,10 +72,6 @@ var User = (function() {
         return this.refreshToken;
     }
 
-    User.prototype.getGooglePersonId = function() {
-        return this.googlePersonId;
-    }
-
     User.prototype.getPubs = function() {
         return this.pubs;
     }
@@ -122,14 +115,8 @@ var User = (function() {
     }
 
     User.logoutCurrent = function (callback) {
-        //TODO(lincoln) get the right method to call from jeff.
-        return window.gapi.auth2.getAuthInstance().signOut()
-            .then((x,y,z) => {
-                debugger
-                getCurrentUserCookieJar().removeAll()
-                callback && callback()
-                return
-            })
+        getCurrentUserCookieJar().removeAll();
+        callback && callback()
     }
     return User
 }())
