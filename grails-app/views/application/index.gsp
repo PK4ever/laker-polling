@@ -25,9 +25,9 @@
     <meta property="og:site_name" content="Laker Polling">
 
     <!--============GOOGLE SIGN IN=========-->
-    <meta name="google-signin-scope" content="profile email">
+    %{--<meta name="google-signin-scope" content="profile email">--}%
     <!-- <meta name="google-signin-client_id" content="460384913941-o01p3pu021rrnq6ibbanenfrmg6r87at.apps.googleusercontent.com"> -->
-    <meta name="google-signin-client_id"content="896100416043-v0cvdf52tteag7ha8939fog24sr7bm2g.apps.googleusercontent.com">
+    %{--<meta name="google-signin-client_id"content="896100416043-v0cvdf52tteag7ha8939fog24sr7bm2g.apps.googleusercontent.com">--}%
 
 
     <!-- ============== START javax.swing.text.html.CSS Resources ============== -->
@@ -40,7 +40,7 @@
 
     <!--============GOOGLE SIGN IN=========-->
     %{--<script src="https://apis.google.com/js/platform.js" async defer></script>--}%
-    <meta name="google-signin-scope" content="profile email">
+    %{--<meta name="google-signin-scope" content="profile email">--}%
     <!-- <meta name="google-signin-client_id" content="460384913941-o01p3pu021rrnq6ibbanenfrmg6r87at.apps.googleusercontent.com"> -->
 
 
@@ -226,7 +226,7 @@
 
     %{--<script src="/grails-app/assets/clientapp/js/libs/angular-infinite-scroll/angular-infinite-scroll.js"></script>--}%
     <script src="${resource(dir: 'clientapp', file: 'js/libs/angular-infinite-scroll/angular-infinite-scroll.js')}"></script>
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
     <!-- ================= END ANGULAR APP DEPENDENDCIES ================== -->
