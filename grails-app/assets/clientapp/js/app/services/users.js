@@ -5,7 +5,17 @@ angularApp
     */
     //a service to run tasks for manipulating editors
     .service("UserService", function($http) {
-        this.getAllCourses = function() {
-            //send api request
+        var functions = {};
+        //gets all the pubs that are being advertised
+        this.authGoogleUser = function(idToken) {
+            //send REST request to our app to fetch all the editors
+            return $http.post("/api/user/auth?idToken=" + idToken, { idToken: idToken })
+                //wait for response and then do something
+                .then(function(response) {
+                    return response.data;
+                }, function(response) {
+                    debugger
+                    return response
+                });
         }
     })

@@ -10,11 +10,11 @@
     <meta name="fragment" content="!">
     <title ng-bind="title">Laker Polling</title>
     <meta property="description"
-          content="Build Your Lists. Learn Something New. Build public & private nested lists of text, links, & images. Collaborate with others to build large lists.">
+          content="Clicker System for SUNY Oswego built by Lakers.">
     <base href="/">
     <meta name="keywords"
-          content="Lists, learn to code, find a job, private lists, create lists, todo lists, to-do lists."/>
-    <meta property="og:url" content="mylysts.com">
+          content="Clicker System for SUNY Oswego built by Lakers"/>
+    <meta property="og:url" content="laker-polling.com">
     <meta property="og:title" content="Laker Polling">
     <meta property="og:description" content="Clicker for Laker">
 
@@ -27,12 +27,10 @@
     <!--============GOOGLE SIGN IN=========-->
     <meta name="google-signin-scope" content="profile email">
     <!-- <meta name="google-signin-client_id" content="460384913941-o01p3pu021rrnq6ibbanenfrmg6r87at.apps.googleusercontent.com"> -->
-    <meta name="google-signin-client_id"
-          content="896100416043-v0cvdf52tteag7ha8939fog24sr7bm2g.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"content="896100416043-v0cvdf52tteag7ha8939fog24sr7bm2g.apps.googleusercontent.com">
 
 
     <!-- ============== START javax.swing.text.html.CSS Resources ============== -->
-    %{--<link rel="stylesheet" href=".png')}">--}%
     <meta property="og:image:secure_url" content="${resource(dir: 'clientapp', file: 'img/logo.png')}">
     <meta property="og:image:type" content="${resource(dir: 'clientapp', file: 'img/logo.png')}">
     <meta property="og:image:width" content="1500">
@@ -116,11 +114,6 @@
     }
     </style>
 
-    %{--<script src="/grails-app/assets/clientapp/js/main.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/main-jqueries.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/cookies.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/classes/User.js"></script>--}%
-
     <script src="${resource(dir: 'clientapp', file: 'js/main.js')}"></script>
     <script src="${resource(dir: 'clientapp', file: 'js/main-jqueries.js')}"></script>
     <script src="${resource(dir: 'clientapp', file: 'js/cookies.js')}"></script>
@@ -195,7 +188,7 @@
     </nav>
 
     <script type="text/javascript">
-        User.showNecessaryIndexViews();
+        //User.showNecessaryIndexViews();
     </script>
 
     <!-- Dynamically render angular.js templates -->
@@ -242,49 +235,20 @@
     <!-- ================= START ANGULAR APP SCRIPTS ================== -->
 
     <!--APP-->
-    %{--<script src="/grails-app/assets/clientapp/js/app/app.js"></script>--}%
-    %{--<!--APP CONFIG-->--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/config.js"></script>--}%
-    %{--<!--APP FILTERS-->--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/filters.js"></script>--}%
-    %{--<!--APP SERVICES-->--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/socketIO.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/google.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/medium.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/notifications.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/lists.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/users.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/services/stats.js"></script>--}%
-    %{--<!--APP CONTROLLERS-->--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/app-ctrl.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/list.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/logout.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/notifications-list.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/lists.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/login.js"></script>--}%
-    %{--<script src="/grails-app/assets/clientapp/js/app/controllers/search.js"></script>--}%
-
-
     <script src="${resource(dir: 'clientapp', file: 'js/app/app.js')}"></script>
+    <!--APP CONFIG-->
     <script src="${resource(dir: 'clientapp', file: 'js/app/config.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/filters.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/socketIO.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/google.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/medium.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/notifications.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/lists.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/lists.js')}"></script>
+    
+    <!--APP SERVICES-->
+
     <script src="${resource(dir: 'clientapp', file: 'js/app/services/users.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/services/stats.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/app-ctrl.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/list.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/logout.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/notifications-list.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/lists.js')}"></script>
+    <!--APP CONTROLLERS-->
+    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/app.js')}"></script>
+    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/redirect.js')}"></script>
+    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/dashboard/student.js')}"></script>
+    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/dashboard/teacher.js')}"></script>
     <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/login.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/search.js')}"></script>
-
-
+    <script src="${resource(dir: 'clientapp', file: 'js/app/controllers/logout.js')}"></script>
 
     <!-- ================= END ANGULAR APP SCRIPTS ================== -->
     <!-- ================= END ANGULAR APP SCRIPTS ================== -->

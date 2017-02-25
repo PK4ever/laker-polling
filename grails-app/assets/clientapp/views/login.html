@@ -7,38 +7,10 @@
             <div class="container-fluid">
                 <img class="img-responsive center-block" id="logo" src="/assets/img/logo.png" width="704" height="636">
                 <div ng-controller="LoginController">
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-1"></div>
 </div>
-<script type="text/javascript">
-    function onSignIn(googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
-
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/user/auth');
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            console.log('Signed in as: ' + xhr.responseText);
-        };
-        xhr.send('idToken=' + id_token);
-    }
-
-    //var xhr = new XMLHttpRequest();
-    //  xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
-    //  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //  xhr.onload = function() {
-    //  console.log('Signed in as: ' + xhr.responseText);
-    //  };
-    //  xhr.send('idtoken=' + id_token);
-    //  xhr.send('profile'+profile);
-
-
-</script>
-
-<!-- CLIENT ID: 190294600455-f9fqaumoifl8a8ud3qsbsg9n5fqblkpe.apps.googleusercontent.com -->
-<!-- Client Secret: vd3osAcAYc56rV5e3yeadJDa -->

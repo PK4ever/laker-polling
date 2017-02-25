@@ -2,96 +2,75 @@ angularApp
     .config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
         //the routeProvider module helps us configure routes in AngularJS.
         $routeProvider
-            .when("/login", {
+            .when("/login/", {
                 //the url to the template for this view
                 templateUrl: "/assets/views/login.html",
                 //the controller of this view
                 controller: "LoginController",
                 //methods to retrieve content and do other things on load
                 resolve: {
-                    currentUser: function() {
+                    currentUser: function($location) {
                         var currentUser = User.getCurrent();
                         if(currentUser){
-                            redirectTo: "/profile";
+                            $location.path('/dashboard')
+                            return
                         }
                         return
                     }
                 }
             })
+            .when("/student", {
+                //the url to the template for this view
+                templateUrl: "/assets/views/dashboard/student.html",
+                //the controller of this view
+                controller: "StudentDashboardController",
+                //methods to retrieve content and do other things on load
+                resolve: {
+                    currentUser: function($location) {
+                        debugger
+                        const currentUser = User.getCurrent();
+                        if(!currentUser) {
+                            redirectTo: '/logout'
+                            return
+                        } else if(currentUser.isTeacher()) {
+                            $location.path('/teacher')
+                            return
+                        }
+                        return currentUser
+                    }
+                }
+            })
+            .when("/teacher", {
+                //the url to the template for this view
+                templateUrl: "/assets/views/dashboard/teacher.html",
+                //the controller of this view
+                controller: "TeacherDashboardController",
+                //methods to retrieve content and do other things on load
+                resolve: {
+                    currentUser: function($location) {
+                        debugger
+                        const currentUser = User.getCurrent();
+                        if(!currentUser) {
+                            redirectTo: '/logout'
+                            return
+                        } else if(currentUser.isStudent()) {
+                            $location.path('/student')
+                            return
+                        }
+                        return currentUser
+                    }
+                }
+            })
             //when the user navigates to the root, index of our app
-            .when("/profile", {
+            .when("/dashboard/", {
                 //the url to the template for this view
-                templateUrl: " ",
+                template: " ",
                 //the controller of this view
-                controller: "ProfileController",
+                controller: "DashboardRedirectController",
                 //methods to retrieve content and do other things on load
                 resolve: {
                     currentUser: function() {
-                        const currentUser = User.getCurrent();
-                        if(!currentUser) {
-                            redirectTo: '/logout'
-                            return
-                        }
-                        if(currentUser.type == 'student') {
-                            redirectTo: '/profile/student'
-                        } else if (currentUser.type == 'teacher') {
-                            redirectTo: '/profile/teacher'
-                        } else if (currentUser.type == 'admin') {
-                            redirectTo: '/profile/admin'
-                        } else {
-                            redirectTo: '/logout'
-                        }
-                    }
-                }
-            })
-            .when("/profile/student", {
-                //the url to the template for this view
-                templateUrl: "views/student-profile.html",
-                //the controller of this view
-                controller: "StudentProfileController",
-                //methods to retrieve content and do other things on load
-                resolve: {
-                    currentUser: function() {
-                        const currentUser = User.getCurrent();
-                        if(!currentUser) {
-                            redirectTo: '/logout'
-                            return
-                        }
-                        return currentUser
-                    }
-                }
-            })
-            .when("/profile/teacher", {
-                //the url to the template for this view
-                templateUrl: "views/student-profile.html",
-                //the controller of this view
-                controller: "TeacherProfileController",
-                //methods to retrieve content and do other things on load
-                resolve: {
-                    currentUser: function() {
-                        const currentUser = User.getCurrent();
-                        if(!currentUser) {
-                            redirectTo: '/logout'
-                            return
-                        }
-                        return currentUser
-                    }
-                }
-            })
-            .when("/profile/admin", {
-                //the url to the template for this view
-                templateUrl: "views/student-profile.html",
-                //the controller of this view
-                controller: "StudentProfileController",
-                //methods to retrieve content and do other things on load
-                resolve: {
-                    currentUser: function() {
-                        const currentUser = User.getCurrent();
-                        if(!currentUser) {
-                            redirectTo: '/logout'
-                            return
-                        }
-                        return currentUser
+                        return User.getCurrent();
                     }
                 }
             })
