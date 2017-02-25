@@ -9,9 +9,9 @@ model {
 json {
     status "success"
     data {
-        id token.subject
         accessToken String.format("%s-%s", token.accessToken, token.subject)
         user {
+            id user.id
             first user.firstName
             last user.lastName
             name String.format("%s %s", user.firstName, user.lastName)
