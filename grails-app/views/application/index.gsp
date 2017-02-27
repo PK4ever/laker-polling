@@ -116,7 +116,6 @@
     </style>
 
     <script src="${resource(dir: 'clientapp', file: 'js/main.js')}"></script>
-    <script src="${resource(dir: 'clientapp', file: 'js/main-jqueries.js')}"></script>
     <script src="${resource(dir: 'clientapp', file: 'js/cookies.js')}"></script>
     <script src="${resource(dir: 'clientapp', file: 'js/classes/User.js')}"></script>
 
